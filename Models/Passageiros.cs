@@ -1,4 +1,4 @@
-class Passageiro
+public class Passageiro
 {
     private int id;
     private string nome;

@@ -1,4 +1,4 @@
-class Motorista
+public class Motorista
 {
     private int id;
     private string nome;
