@@ -1,4 +1,4 @@
-class Administrador
+ public class Administrador
 {
     private int id;
     private string nome;
