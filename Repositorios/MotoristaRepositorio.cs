@@ -1,31 +1,32 @@
 
+using System;
 using MySql.Data.MySqlClient;
 
 public class MotoristaRepositorio
 {
     private Conexao conexao = new Conexao();
 
-    public void Cadastrar(Administrador administrador)
+    public void Cadastrar(Motorista motorista)
     {
         using (MySqlConnection conn = conexao.Conectar())
         {
-            string sql = "INSERT INTO Administradores (nome, cpf, senha) VALUES (@nome, @cpf, @senha)";
+            string sql = "INSERT INTO Motoristas (nome, cpf, senha) VALUES (@nome, @cpf, @senha)";
 
             MySqlCommand comando = new MySqlCommand(sql, conn);
 
-            comando.Parameters.AddWithValue("@nome", administrador.Nome);
-            comando.Parameters.AddWithValue("@cpf", administrador.Cpf);
-            comando.Parameters.AddWithValue("@senha", administrador.Senha);
+            comando.Parameters.AddWithValue("@nome", motorista.Nome);
+            comando.Parameters.AddWithValue("@cpf", motorista.Cpf);
+            comando.Parameters.AddWithValue("@senha", motorista.Senha);
 
             comando.ExecuteNonQuery();
         }
     }
 
-    public Administrador BuscarPorCpf(string cpf)
+    public Motorista BuscarPorCpf(string cpf)
     {
         using (MySqlConnection conn = conexao.Conectar())
         {
-            string sql = "SELECT * FROM Administradores WHERE cpf = @cpf";
+            string sql = "SELECT * FROM Motoristas WHERE cpf = @cpf";
 
             MySqlCommand comando = new MySqlCommand(sql, conn);
 
@@ -35,15 +36,15 @@ public class MotoristaRepositorio
 
             if (leitor.Read())
             {
-                Administrador administrador = new Administrador(
+                Motorista motorista = new Motorista(
                     leitor["nome"].ToString(),
                     leitor["cpf"].ToString(),
                     leitor["senha"].ToString()
                 );
 
-                administrador.Id = Convert.ToInt32(leitor["id"]);
+                motorista.Id = Convert.ToInt32(leitor["id"]);
 
-                return administrador;
+                return motorista;
             }
 
             return null;
