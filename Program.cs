@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using UrbanBus.Models;
 using UrbanBus.Servicos;
 
@@ -110,7 +111,15 @@ class Program
 
                 bool resultado = usuarioServico.CadastrarAdministrador(nome, cpf, senha);
 
-                Mensagem(resultado ? "Administrador cadastrado com sucesso!" : "Não foi possível cadastrar. Verifique os dados ou se o CPF já existe.");
+                if (resultado)
+                {
+                    Mensagem("Administrador cadastrado com sucesso! Entrando na conta...");
+                    MenuAdministrador();
+                }
+                else
+                {
+                    Mensagem("Não foi possível cadastrar. Verifique os dados ou se o CPF já existe.");
+                }
             }
             else if (opcao == 2)
             {
@@ -165,7 +174,15 @@ class Program
 
                 bool resultado = usuarioServico.CadastrarMotorista(nome, cpf, senha);
 
-                Mensagem(resultado ? "Motorista cadastrado com sucesso!" : "Não foi possível cadastrar. Verifique os dados ou se o CPF já existe.");
+                if (resultado)
+                {
+                    Mensagem("Motorista cadastrado com sucesso! Entrando na conta...");
+                    MenuConsulta("MOTORISTA");
+                }
+                else
+                {
+                    Mensagem("Não foi possível cadastrar. Verifique os dados ou se o CPF já existe.");
+                }
             }
             else if (opcao == 2)
             {
@@ -220,7 +237,15 @@ class Program
 
                 bool resultado = usuarioServico.CadastrarPassageiro(nome, cpf, senha);
 
-                Mensagem(resultado ? "Passageiro cadastrado com sucesso!" : "Não foi possível cadastrar. Verifique os dados ou se o CPF já existe.");
+                if (resultado)
+                {
+                    Mensagem("Passageiro cadastrado com sucesso! Entrando na conta...");
+                    MenuConsulta("PASSAGEIRO");
+                }
+                else
+                {
+                    Mensagem("Não foi possível cadastrar. Verifique os dados ou se o CPF já existe.");
+                }
             }
             else if (opcao == 2)
             {
@@ -345,7 +370,7 @@ class Program
             else
                 Mensagem("Opção inválida!");
         }
-    }   
+    }
 
     static void MenuPontos()
     {
@@ -597,7 +622,6 @@ class Program
             Console.WriteLine("ID: " + linha.Id);
             Console.WriteLine("Nome: " + linha.Nome);
             Console.WriteLine("Código: " + linha.Codigo);
-
         }
 
         if (linhas.Count == 0)
