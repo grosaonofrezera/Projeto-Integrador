@@ -1,5 +1,6 @@
 
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UrbanBus.Models;
 using UrbanBus.Repositorios;
 
@@ -9,18 +10,48 @@ namespace UrbanBus.Servicos
     {
         private PontoRepositorio repositorio = new PontoRepositorio();
 
-        public bool Cadastrar(string nome, string endereco, string bairro)
+        private bool ValidarNome(string nome)
         {
             if (string.IsNullOrWhiteSpace(nome))
                 return false;
 
+            return Regex.IsMatch(nome.Trim(), @"^[\p{L}\s]+$");
+        }
+
+        private bool ValidarEndereco(string endereco)
+        {
             if (string.IsNullOrWhiteSpace(endereco))
                 return false;
 
+            return Regex.IsMatch(endereco.Trim(), @"^[\p{L}\p{N}\s.,º°/-]+$");
+        }
+
+        private bool ValidarBairro(string bairro)
+        {
             if (string.IsNullOrWhiteSpace(bairro))
                 return false;
 
-            Ponto ponto = new Ponto(0, nome, endereco, bairro);
+            return Regex.IsMatch(bairro.Trim(), @"^[\p{L}\s]+$");
+        }
+
+        private bool ValidarDados(string nome, string endereco, string bairro)
+        {
+            return ValidarNome(nome) &&
+                   ValidarEndereco(endereco) &&
+                   ValidarBairro(bairro);
+        }
+
+        public bool Cadastrar(string nome, string endereco, string bairro)
+        {
+            if (!ValidarDados(nome, endereco, bairro))
+                return false;
+
+            Ponto ponto = new Ponto(
+                0,
+                nome.Trim(),
+                endereco.Trim(),
+                bairro.Trim()
+            );
 
             repositorio.Cadastrar(ponto);
 
@@ -45,12 +76,15 @@ namespace UrbanBus.Servicos
             if (id <= 0)
                 return false;
 
-            if (string.IsNullOrWhiteSpace(nome) ||
-                string.IsNullOrWhiteSpace(endereco) ||
-                string.IsNullOrWhiteSpace(bairro))
+            if (!ValidarDados(nome, endereco, bairro))
                 return false;
 
-            Ponto ponto = new Ponto(id, nome, endereco, bairro);
+            Ponto ponto = new Ponto(
+                id,
+                nome.Trim(),
+                endereco.Trim(),
+                bairro.Trim()
+            );
 
             return repositorio.Atualizar(ponto);
         }

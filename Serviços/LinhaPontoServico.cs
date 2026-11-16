@@ -9,9 +9,23 @@ namespace UrbanBus.Servicos
     {
         private LinhaPontoRepositorio repositorio = new LinhaPontoRepositorio();
 
+        private bool ValidarDados(int linhaId, int pontoId, int ordem)
+        {
+            if (linhaId <= 0)
+                return false;
+
+            if (pontoId <= 0)
+                return false;
+
+            if (ordem <= 0)
+                return false;
+
+            return true;
+        }
+
         public bool Cadastrar(int linhaId, int pontoId, int ordem)
         {
-            if (linhaId <= 0 || pontoId <= 0 || ordem <= 0)
+            if (!ValidarDados(linhaId, pontoId, ordem))
                 return false;
 
             LinhaPonto linhaPonto = new LinhaPonto(0, linhaId, pontoId, ordem);
@@ -36,7 +50,10 @@ namespace UrbanBus.Servicos
 
         public bool Atualizar(int id, int linhaId, int pontoId, int ordem)
         {
-            if (id <= 0 || linhaId <= 0 || pontoId <= 0 || ordem <= 0)
+            if (id <= 0)
+                return false;
+
+            if (!ValidarDados(linhaId, pontoId, ordem))
                 return false;
 
             LinhaPonto linhaPonto = new LinhaPonto(id, linhaId, pontoId, ordem);

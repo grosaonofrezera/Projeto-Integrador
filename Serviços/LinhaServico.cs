@@ -1,4 +1,6 @@
+
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UrbanBus.Models;
 using UrbanBus.Repositorios;
 
@@ -8,15 +10,35 @@ namespace UrbanBus.Servicos
     {
         private LinhaRepositorio repositorio = new LinhaRepositorio();
 
-        public bool Cadastrar(string nome, string codigo)
+        private bool ValidarNome(string nome)
         {
             if (string.IsNullOrWhiteSpace(nome))
                 return false;
 
+            return Regex.IsMatch(nome.Trim(), @"^[\p{L}\s]+$");
+        }
+
+        private bool ValidarCodigo(string codigo)
+        {
             if (string.IsNullOrWhiteSpace(codigo))
                 return false;
 
-            Linha linha = new Linha(0, nome, codigo);
+            return Regex.IsMatch(codigo.Trim(), @"^[a-zA-Z0-9]+$");
+        }
+
+        public bool Cadastrar(string nome, string codigo)
+        {
+            if (!ValidarNome(nome))
+                return false;
+
+            if (!ValidarCodigo(codigo))
+                return false;
+
+            Linha linha = new Linha(
+                0,
+                nome.Trim(),
+                codigo.Trim()
+            );
 
             repositorio.Cadastrar(linha);
 
@@ -38,11 +60,20 @@ namespace UrbanBus.Servicos
 
         public bool Atualizar(int id, string nome, string codigo)
         {
-            if (id <= 0 || string.IsNullOrWhiteSpace(nome) ||
-                string.IsNullOrWhiteSpace(codigo))
+            if (id <= 0)
                 return false;
 
-            Linha linha = new Linha(id, nome, codigo);
+            if (!ValidarNome(nome))
+                return false;
+
+            if (!ValidarCodigo(codigo))
+                return false;
+
+            Linha linha = new Linha(
+                id,
+                nome.Trim(),
+                codigo.Trim()
+            );
 
             return repositorio.Atualizar(linha);
         }
