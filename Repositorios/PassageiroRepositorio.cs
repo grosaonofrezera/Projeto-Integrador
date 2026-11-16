@@ -1,31 +1,32 @@
 
+using System;
 using MySql.Data.MySqlClient;
 
 public class PassageiroRepositorio
 {
     private Conexao conexao = new Conexao();
 
-    public void Cadastrar(Administrador administrador)
+    public void Cadastrar(Passageiro passageiro)
     {
         using (MySqlConnection conn = conexao.Conectar())
         {
-            string sql = "INSERT INTO Administradores (nome, cpf, senha) VALUES (@nome, @cpf, @senha)";
+            string sql = "INSERT INTO Passageiros (nome, cpf, senha) VALUES (@nome, @cpf, @senha)";
 
             MySqlCommand comando = new MySqlCommand(sql, conn);
 
-            comando.Parameters.AddWithValue("@nome", administrador.Nome);
-            comando.Parameters.AddWithValue("@cpf", administrador.Cpf);
-            comando.Parameters.AddWithValue("@senha", administrador.Senha);
+            comando.Parameters.AddWithValue("@nome", passageiro.Nome);
+            comando.Parameters.AddWithValue("@cpf", passageiro.Cpf);
+            comando.Parameters.AddWithValue("@senha", passageiro.Senha);
 
             comando.ExecuteNonQuery();
         }
     }
 
-    public Administrador BuscarPorCpf(string cpf)
+    public Passageiro BuscarPorCpf(string cpf)
     {
         using (MySqlConnection conn = conexao.Conectar())
         {
-            string sql = "SELECT * FROM Administradores WHERE cpf = @cpf";
+            string sql = "SELECT * FROM Passageiros WHERE cpf = @cpf";
 
             MySqlCommand comando = new MySqlCommand(sql, conn);
 
@@ -35,15 +36,15 @@ public class PassageiroRepositorio
 
             if (leitor.Read())
             {
-                Administrador administrador = new Administrador(
+                Passageiro passageiro = new Passageiro(
                     leitor["nome"].ToString(),
                     leitor["cpf"].ToString(),
                     leitor["senha"].ToString()
                 );
 
-                administrador.Id = Convert.ToInt32(leitor["id"]);
+                passageiro.Id = Convert.ToInt32(leitor["id"]);
 
-                return administrador;
+                return passageiro;
             }
 
             return null;
