@@ -28,6 +28,7 @@ namespace UrbanBus.Models
         }
         public LinhaPonto(int id, int linhaid, int pontoid, int ordem)
         {
+            Id = id;
             LinhaId = linhaid;
             PontoId = pontoid;
             Ordem = ordem;
