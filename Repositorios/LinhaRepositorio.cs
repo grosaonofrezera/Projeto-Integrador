@@ -1,6 +1,7 @@
-
 using MySql.Data.MySqlClient;
 using UrbanBus.Models;
+using System;
+using System.Collections.Generic;
 
 namespace UrbanBus.Repositorios
 {
@@ -8,7 +9,6 @@ namespace UrbanBus.Repositorios
     {
         private Conexao conexao = new Conexao();
 
-        // CADASTRAR LINHA
         public void Cadastrar(Linha linha)
         {
             using (MySqlConnection conn = conexao.Conectar())
@@ -27,7 +27,6 @@ namespace UrbanBus.Repositorios
             }
         }
 
-        // LISTAR LINHAS
         public List<Linha> Listar()
         {
             List<Linha> linhas = new List<Linha>();
@@ -57,7 +56,6 @@ namespace UrbanBus.Repositorios
             return linhas;
         }
 
-        // BUSCAR LINHA PELO ID
         public Linha BuscarPorId(int id)
         {
             using (MySqlConnection conn = conexao.Conectar())
@@ -87,7 +85,6 @@ namespace UrbanBus.Repositorios
             }
         }
 
-        // ATUALIZAR LINHA
         public bool Atualizar(Linha linha)
         {
             using (MySqlConnection conn = conexao.Conectar())
@@ -107,7 +104,6 @@ namespace UrbanBus.Repositorios
             }
         }
 
-        // EXCLUIR LINHA
         public bool Excluir(int id)
         {
             using (MySqlConnection conn = conexao.Conectar())
