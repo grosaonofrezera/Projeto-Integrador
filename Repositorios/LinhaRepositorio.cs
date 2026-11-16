@@ -13,15 +13,12 @@ namespace UrbanBus.Repositorios
         {
             using (MySqlConnection conn = conexao.Conectar())
             {
-                string sql = "INSERT INTO Linhas (nome, codigo, descricao, status) " +
-                             "VALUES (@nome, @codigo, @descricao, @status)";
+                string sql = "INSERT INTO Linhas (nome, codigo) VALUES (@nome, @codigo)";
 
                 MySqlCommand comando = new MySqlCommand(sql, conn);
 
                 comando.Parameters.AddWithValue("@nome", linha.Nome);
                 comando.Parameters.AddWithValue("@codigo", linha.Codigo);
-                comando.Parameters.AddWithValue("@descricao", linha.Descricao);
-                comando.Parameters.AddWithValue("@status", linha.Status);
 
                 comando.ExecuteNonQuery();
             }
@@ -44,9 +41,7 @@ namespace UrbanBus.Repositorios
                     Linha linha = new Linha(
                         Convert.ToInt32(leitor["id"]),
                         leitor["nome"].ToString(),
-                        leitor["codigo"].ToString(),
-                        leitor["descricao"].ToString(),
-                        leitor["status"].ToString()
+                        leitor["codigo"].ToString()
                     );
 
                     linhas.Add(linha);
@@ -63,22 +58,17 @@ namespace UrbanBus.Repositorios
                 string sql = "SELECT * FROM Linhas WHERE id = @id";
 
                 MySqlCommand comando = new MySqlCommand(sql, conn);
-
                 comando.Parameters.AddWithValue("@id", id);
 
                 MySqlDataReader leitor = comando.ExecuteReader();
 
                 if (leitor.Read())
                 {
-                    Linha linha = new Linha(
+                    return new Linha(
                         Convert.ToInt32(leitor["id"]),
                         leitor["nome"].ToString(),
-                        leitor["codigo"].ToString(),
-                        leitor["descricao"].ToString(),
-                        leitor["status"].ToString()
+                        leitor["codigo"].ToString()
                     );
-
-                    return linha;
                 }
 
                 return null;
@@ -89,16 +79,13 @@ namespace UrbanBus.Repositorios
         {
             using (MySqlConnection conn = conexao.Conectar())
             {
-                string sql = "UPDATE Linhas SET nome = @nome, codigo = @codigo, " +
-                             "descricao = @descricao, status = @status WHERE id = @id";
+                string sql = "UPDATE Linhas SET nome = @nome, codigo = @codigo WHERE id = @id";
 
                 MySqlCommand comando = new MySqlCommand(sql, conn);
 
                 comando.Parameters.AddWithValue("@id", linha.Id);
                 comando.Parameters.AddWithValue("@nome", linha.Nome);
                 comando.Parameters.AddWithValue("@codigo", linha.Codigo);
-                comando.Parameters.AddWithValue("@descricao", linha.Descricao);
-                comando.Parameters.AddWithValue("@status", linha.Status);
 
                 return comando.ExecuteNonQuery() > 0;
             }
@@ -111,7 +98,6 @@ namespace UrbanBus.Repositorios
                 string sql = "DELETE FROM Linhas WHERE id = @id";
 
                 MySqlCommand comando = new MySqlCommand(sql, conn);
-
                 comando.Parameters.AddWithValue("@id", id);
 
                 return comando.ExecuteNonQuery() > 0;

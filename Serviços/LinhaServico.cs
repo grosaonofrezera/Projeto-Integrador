@@ -1,4 +1,3 @@
-
 using System.Collections.Generic;
 using UrbanBus.Models;
 using UrbanBus.Repositorios;
@@ -9,7 +8,7 @@ namespace UrbanBus.Servicos
     {
         private LinhaRepositorio repositorio = new LinhaRepositorio();
 
-        public bool Cadastrar(string nome, string codigo, string descricao, string status)
+        public bool Cadastrar(string nome, string codigo)
         {
             if (string.IsNullOrWhiteSpace(nome))
                 return false;
@@ -17,10 +16,7 @@ namespace UrbanBus.Servicos
             if (string.IsNullOrWhiteSpace(codigo))
                 return false;
 
-            if (string.IsNullOrWhiteSpace(status))
-                return false;
-
-            Linha linha = new Linha(0, nome, codigo, descricao, status);
+            Linha linha = new Linha(0, nome, codigo);
 
             repositorio.Cadastrar(linha);
 
@@ -40,14 +36,13 @@ namespace UrbanBus.Servicos
             return repositorio.BuscarPorId(id);
         }
 
-        public bool Atualizar(int id, string nome, string codigo, string descricao, string status)
+        public bool Atualizar(int id, string nome, string codigo)
         {
             if (id <= 0 || string.IsNullOrWhiteSpace(nome) ||
-                string.IsNullOrWhiteSpace(codigo) ||
-                string.IsNullOrWhiteSpace(status))
+                string.IsNullOrWhiteSpace(codigo))
                 return false;
 
-            Linha linha = new Linha(id, nome, codigo, descricao, status);
+            Linha linha = new Linha(id, nome, codigo);
 
             return repositorio.Atualizar(linha);
         }
