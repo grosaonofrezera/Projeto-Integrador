@@ -1,4 +1,9 @@
 ﻿
+using System;
+using UrbanBus.Servicos;
+
+UsuarioServico usuarioServico = new UsuarioServico();
+
 while (true)
 {
     Console.Clear();
@@ -18,7 +23,7 @@ while (true)
     while (true)
     {
         Console.Write("Escolha uma opção: ");
-        string entrada = Console.ReadLine();
+        string entrada = Console.ReadLine() ?? "";
 
         if (int.TryParse(entrada, out opcao) &&
             opcao >= 0 && opcao <= 3)
@@ -49,7 +54,7 @@ while (true)
             while (true)
             {
                 Console.Write("Escolha uma opção: ");
-                string entrada = Console.ReadLine();
+                string entrada = Console.ReadLine() ?? "";
 
                 if (int.TryParse(entrada, out opcaoAdministrador) &&
                     opcaoAdministrador >= 0 && opcaoAdministrador <= 2)
@@ -62,11 +67,46 @@ while (true)
 
             if (opcaoAdministrador == 1)
             {
-                Console.WriteLine("Cadastro de administrador será implementado.");
+                Console.Clear();
+
+                Console.WriteLine("=== CADASTRO DE ADMINISTRADOR ===");
+                Console.WriteLine();
+
+                Console.Write("Nome: ");
+                string nome = Console.ReadLine() ?? "";
+
+                Console.Write("CPF: ");
+                string cpf = Console.ReadLine() ?? "";
+
+                Console.Write("Senha: ");
+                string senha = Console.ReadLine() ?? "";
+
+                bool resultado = usuarioServico.CadastrarAdministrador(nome, cpf, senha);
+
+                if (resultado)
+                    Console.WriteLine("\nAdministrador cadastrado com sucesso!");
+                else
+                    Console.WriteLine("\nNão foi possível cadastrar. Verifique os dados ou se o CPF já existe.");
             }
             else if (opcaoAdministrador == 2)
             {
-                Console.WriteLine("Login de administrador será implementado.");
+                Console.Clear();
+
+                Console.WriteLine("=== LOGIN DE ADMINISTRADOR ===");
+                Console.WriteLine();
+
+                Console.Write("CPF: ");
+                string cpf = Console.ReadLine() ?? "";
+
+                Console.Write("Senha: ");
+                string senha = Console.ReadLine() ?? "";
+
+                var administrador = usuarioServico.LoginAdministrador(cpf, senha);
+
+                if (administrador != null)
+                    Console.WriteLine("\nLogin realizado com sucesso!");
+                else
+                    Console.WriteLine("\nCPF ou senha incorretos.");
             }
             else if (opcaoAdministrador == 0)
             {
@@ -98,7 +138,7 @@ while (true)
             while (true)
             {
                 Console.Write("Escolha uma opção: ");
-                string entrada = Console.ReadLine();
+                string entrada = Console.ReadLine() ?? "";
 
                 if (int.TryParse(entrada, out opcaoMotorista) &&
                     opcaoMotorista >= 0 && opcaoMotorista <= 2)
@@ -111,11 +151,46 @@ while (true)
 
             if (opcaoMotorista == 1)
             {
-                Console.WriteLine("Cadastro de motorista será implementado.");
+                Console.Clear();
+
+                Console.WriteLine("=== CADASTRO DE MOTORISTA ===");
+                Console.WriteLine();
+
+                Console.Write("Nome: ");
+                string nome = Console.ReadLine() ?? "";
+
+                Console.Write("CPF: ");
+                string cpf = Console.ReadLine() ?? "";
+
+                Console.Write("Senha: ");
+                string senha = Console.ReadLine() ?? "";
+
+                bool resultado = usuarioServico.CadastrarMotorista(nome, cpf, senha);
+
+                if (resultado)
+                    Console.WriteLine("\nMotorista cadastrado com sucesso!");
+                else
+                    Console.WriteLine("\nNão foi possível cadastrar. Verifique os dados ou se o CPF já existe.");
             }
             else if (opcaoMotorista == 2)
             {
-                Console.WriteLine("Login de motorista será implementado.");
+                Console.Clear();
+
+                Console.WriteLine("=== LOGIN DE MOTORISTA ===");
+                Console.WriteLine();
+
+                Console.Write("CPF: ");
+                string cpf = Console.ReadLine() ?? "";
+
+                Console.Write("Senha: ");
+                string senha = Console.ReadLine() ?? "";
+
+                var motorista = usuarioServico.LoginMotorista(cpf, senha);
+
+                if (motorista != null)
+                    Console.WriteLine("\nLogin realizado com sucesso!");
+                else
+                    Console.WriteLine("\nCPF ou senha incorretos.");
             }
             else if (opcaoMotorista == 0)
             {
@@ -147,7 +222,7 @@ while (true)
             while (true)
             {
                 Console.Write("Escolha uma opção: ");
-                string entrada = Console.ReadLine();
+                string entrada = Console.ReadLine() ?? "";
 
                 if (int.TryParse(entrada, out opcaoPassageiro) &&
                     opcaoPassageiro >= 0 && opcaoPassageiro <= 2)
@@ -160,11 +235,46 @@ while (true)
 
             if (opcaoPassageiro == 1)
             {
-                Console.WriteLine("Cadastro de passageiro será implementado.");
+                Console.Clear();
+
+                Console.WriteLine("=== CADASTRO DE PASSAGEIRO ===");
+                Console.WriteLine();
+
+                Console.Write("Nome: ");
+                string nome = Console.ReadLine() ?? "";
+
+                Console.Write("CPF: ");
+                string cpf = Console.ReadLine() ?? "";
+
+                Console.Write("Senha: ");
+                string senha = Console.ReadLine() ?? "";
+
+                bool resultado = usuarioServico.CadastrarPassageiro(nome, cpf, senha);
+
+                if (resultado)
+                    Console.WriteLine("\nPassageiro cadastrado com sucesso!");
+                else
+                    Console.WriteLine("\nNão foi possível cadastrar. Verifique os dados ou se o CPF já existe.");
             }
             else if (opcaoPassageiro == 2)
             {
-                Console.WriteLine("Login de passageiro será implementado.");
+                Console.Clear();
+
+                Console.WriteLine("=== LOGIN DE PASSAGEIRO ===");
+                Console.WriteLine();
+
+                Console.Write("CPF: ");
+                string cpf = Console.ReadLine() ?? "";
+
+                Console.Write("Senha: ");
+                string senha = Console.ReadLine() ?? "";
+
+                var passageiro = usuarioServico.LoginPassageiro(cpf, senha);
+
+                if (passageiro != null)
+                    Console.WriteLine("\nLogin realizado com sucesso!");
+                else
+                    Console.WriteLine("\nCPF ou senha incorretos.");
             }
             else if (opcaoPassageiro == 0)
             {

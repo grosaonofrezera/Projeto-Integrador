@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
@@ -14,14 +15,14 @@ namespace UrbanBus.Repositorios
             using (MySqlConnection conn = conexao.Conectar())
             {
                 string sql = @"INSERT INTO Horarios
-                (linhaid, horarioSaida, diaSemana)
-                VALUES (@linhaid, @horarioSaida, @diaSemana)";
+                (linha_id, horario_saida, dia_semana)
+                VALUES (@linha_id, @horario_saida, @dia_semana)";
 
                 MySqlCommand comando = new MySqlCommand(sql, conn);
 
-                comando.Parameters.AddWithValue("@linhaid", horario.LinhaId);
-                comando.Parameters.AddWithValue("@horarioSaida", horario.HorarioSaida);
-                comando.Parameters.AddWithValue("@diaSemana", horario.DiaSemana);
+                comando.Parameters.AddWithValue("@linha_id", horario.LinhaId);
+                comando.Parameters.AddWithValue("@horario_saida", horario.HorarioSaida);
+                comando.Parameters.AddWithValue("@dia_semana", horario.DiaSemana);
 
                 comando.ExecuteNonQuery();
             }
@@ -43,9 +44,9 @@ namespace UrbanBus.Repositorios
                 {
                     Horario horario = new Horario(
                         Convert.ToInt32(leitor["id"]),
-                        Convert.ToInt32(leitor["linhaid"]),
-                        TimeSpan.Parse(leitor["horarioSaida"].ToString()),
-                        leitor["diaSemana"].ToString()
+                        Convert.ToInt32(leitor["linha_id"]),
+                        TimeSpan.Parse(leitor["horario_saida"].ToString()),
+                        leitor["dia_semana"].ToString()
                     );
 
                     horarios.Add(horario);
@@ -71,9 +72,9 @@ namespace UrbanBus.Repositorios
                 {
                     return new Horario(
                         Convert.ToInt32(leitor["id"]),
-                        Convert.ToInt32(leitor["linhaid"]),
-                        TimeSpan.Parse(leitor["horarioSaida"].ToString()),
-                        leitor["diaSemana"].ToString()
+                        Convert.ToInt32(leitor["linha_id"]),
+                        TimeSpan.Parse(leitor["horario_saida"].ToString()),
+                        leitor["dia_semana"].ToString()
                     );
                 }
 
@@ -86,17 +87,17 @@ namespace UrbanBus.Repositorios
             using (MySqlConnection conn = conexao.Conectar())
             {
                 string sql = @"UPDATE Horarios SET
-                linhaid = @linhaid,
-                horarioSaida = @horarioSaida,
-                diaSemana = @diaSemana
+                linha_id = @linha_id,
+                horario_saida = @horario_saida,
+                dia_semana = @dia_semana
                 WHERE id = @id";
 
                 MySqlCommand comando = new MySqlCommand(sql, conn);
 
                 comando.Parameters.AddWithValue("@id", horario.Id);
-                comando.Parameters.AddWithValue("@linhaid", horario.LinhaId);
-                comando.Parameters.AddWithValue("@horarioSaida", horario.HorarioSaida);
-                comando.Parameters.AddWithValue("@diaSemana", horario.DiaSemana);
+                comando.Parameters.AddWithValue("@linha_id", horario.LinhaId);
+                comando.Parameters.AddWithValue("@horario_saida", horario.HorarioSaida);
+                comando.Parameters.AddWithValue("@dia_semana", horario.DiaSemana);
 
                 return comando.ExecuteNonQuery() > 0;
             }

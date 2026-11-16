@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
@@ -13,14 +14,14 @@ namespace UrbanBus.Repositorios
         {
             using (MySqlConnection conn = conexao.Conectar())
             {
-                string sql = @"INSERT INTO LinhaPonto
-                (linhaid, pontoid, ordem)
-                VALUES (@linhaid, @pontoid, @ordem)";
+                string sql = @"INSERT INTO LinhaPontos
+                (linha_id, ponto_id, ordem)
+                VALUES (@linha_id, @ponto_id, @ordem)";
 
                 MySqlCommand comando = new MySqlCommand(sql, conn);
 
-                comando.Parameters.AddWithValue("@linhaid", linhaPonto.LinhaId);
-                comando.Parameters.AddWithValue("@pontoid", linhaPonto.PontoId);
+                comando.Parameters.AddWithValue("@linha_id", linhaPonto.LinhaId);
+                comando.Parameters.AddWithValue("@ponto_id", linhaPonto.PontoId);
                 comando.Parameters.AddWithValue("@ordem", linhaPonto.Ordem);
 
                 comando.ExecuteNonQuery();
@@ -33,7 +34,7 @@ namespace UrbanBus.Repositorios
 
             using (MySqlConnection conn = conexao.Conectar())
             {
-                string sql = "SELECT * FROM LinhaPonto";
+                string sql = "SELECT * FROM LinhaPontos";
 
                 MySqlCommand comando = new MySqlCommand(sql, conn);
 
@@ -43,8 +44,8 @@ namespace UrbanBus.Repositorios
                 {
                     LinhaPonto linhaPonto = new LinhaPonto(
                         Convert.ToInt32(leitor["id"]),
-                        Convert.ToInt32(leitor["linhaid"]),
-                        Convert.ToInt32(leitor["pontoid"]),
+                        Convert.ToInt32(leitor["linha_id"]),
+                        Convert.ToInt32(leitor["ponto_id"]),
                         Convert.ToInt32(leitor["ordem"])
                     );
 
@@ -59,7 +60,7 @@ namespace UrbanBus.Repositorios
         {
             using (MySqlConnection conn = conexao.Conectar())
             {
-                string sql = "SELECT * FROM LinhaPonto WHERE id = @id";
+                string sql = "SELECT * FROM LinhaPontos WHERE id = @id";
 
                 MySqlCommand comando = new MySqlCommand(sql, conn);
 
@@ -71,8 +72,8 @@ namespace UrbanBus.Repositorios
                 {
                     return new LinhaPonto(
                         Convert.ToInt32(leitor["id"]),
-                        Convert.ToInt32(leitor["linhaid"]),
-                        Convert.ToInt32(leitor["pontoid"]),
+                        Convert.ToInt32(leitor["linha_id"]),
+                        Convert.ToInt32(leitor["ponto_id"]),
                         Convert.ToInt32(leitor["ordem"])
                     );
                 }
@@ -85,17 +86,17 @@ namespace UrbanBus.Repositorios
         {
             using (MySqlConnection conn = conexao.Conectar())
             {
-                string sql = @"UPDATE LinhaPonto SET
-                linhaid = @linhaid,
-                pontoid = @pontoid,
+                string sql = @"UPDATE LinhaPontos SET
+                linha_id = @linha_id,
+                ponto_id = @ponto_id,
                 ordem = @ordem
                 WHERE id = @id";
 
                 MySqlCommand comando = new MySqlCommand(sql, conn);
 
                 comando.Parameters.AddWithValue("@id", linhaPonto.Id);
-                comando.Parameters.AddWithValue("@linhaid", linhaPonto.LinhaId);
-                comando.Parameters.AddWithValue("@pontoid", linhaPonto.PontoId);
+                comando.Parameters.AddWithValue("@linha_id", linhaPonto.LinhaId);
+                comando.Parameters.AddWithValue("@ponto_id", linhaPonto.PontoId);
                 comando.Parameters.AddWithValue("@ordem", linhaPonto.Ordem);
 
                 return comando.ExecuteNonQuery() > 0;
@@ -106,7 +107,7 @@ namespace UrbanBus.Repositorios
         {
             using (MySqlConnection conn = conexao.Conectar())
             {
-                string sql = "DELETE FROM LinhaPonto WHERE id = @id";
+                string sql = "DELETE FROM LinhaPontos WHERE id = @id";
 
                 MySqlCommand comando = new MySqlCommand(sql, conn);
 
